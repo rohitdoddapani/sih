@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .marker {
+            background-image: url('mapbox-icon.png');
+            background-size: cover;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .mapboxgl-popup {
+            max-width: 200px;
+        }
+
+        .mapboxgl-popup-content {
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='map'></div>
+
+    <script>
+
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicm9oaXQ1MjIiLCJhIjoiY2s1OXA5bzc3MDB0YzNvbW0zZmQ4ZDk0eCJ9._tqjcpuZOcf8tDUUqLRpcw';
+
+        var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/rohit522/ck8zompbe0lb41irqlgfpm3od',
+            center: [78.04263324487601, 30.32433658134211],
+            zoom: 15.28
+        });
+
+        // code from the next step will go here!
+        var geojson = {
+            type: 'FeatureCollection',
+            features: [{
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.03847243028224,
+                        30.32349692958897]
+                },
+                properties: {
+                    title: 'SL178'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.0396051963117,
+                        30.323864914645355]
+                },
+                properties: {
+                    title: 'SL189'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.03933723017059,
+                        30.3253368410667]
+                },
+                properties: {
+                    title: 'SL134'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04152968057281,
+                        30.325936119053566]
+                },
+                properties: {
+                    title: 'SL192'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04210215376077,
+                        30.325158108324175]
+                },
+                properties: {
+                    title: 'SL159'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04308875642982,
+                        30.32547351882188]
+                },
+                properties: {
+                    title: 'SL162'
+                }
+            },
+
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04273366582316,
+                        30.323891086101142]
+                },
+                properties: {
+                    title: 'SL162'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04412408026269,
+                        30.326335635681033]
+                },
+                properties: {
+                    title: 'SL178'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.0446356520286,
+                        30.32629358137646]
+                },
+                properties: {
+                    title: 'SL225'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04586586029893,
+                        30.32609382317868]
+                },
+                properties: {
+                    title: 'SL261'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04615818702274,
+                        30.32433803626313]
+                },
+                properties: {
+                    title: 'SL221'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04526902659586,
+                        30.323812345439563]
+                },
+                properties: {
+                    title: 'SL198'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04360032819443,
+                        30.324401118972915]
+                },
+                properties: {
+                    title: 'SL156'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04271116774555,
+                        30.322929178494718]
+                },
+                properties: {
+                    title: 'SL234'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.04205343264107,
+                        30.3235284712201]
+                },
+                properties: {
+                    title: 'SL165'
+                }
+            },
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [78.0407866835065,
+                        30.322340396122158]
+                },
+                properties: {
+                    title: 'SL218'
+                }
+            },]
+        };
+
+        // add markers to map
+        geojson.features.forEach(function (marker) {
+
+            // create a HTML element for each feature
+            var el = document.createElement('div');
+            el.className = 'marker';
+
+            // make a marker for each feature and add to the map
+            new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML('<h3>' + marker.properties.title + '</h3>'))
+                .addTo(map);
+        });
+
+        map.on('load', function () {
+            map.addSource('route', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': '#6d8fed'
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [
+                                    [
+                                        78.03847243027019,
+                                        30.323486416139062
+                                    ],
+                                    [
+                                        78.03959301604283,
+                                        30.32384388739797
+                                    ],
+                                    [
+                                        78.03934941044008,
+                                        30.325326327813713
+                                    ],
+                                    [
+                                        78.04152968058281,
+                                        30.325936119486272
+                                    ],
+                                    [
+                                        78.04211433403032,
+                                        30.32516862245288
+                                    ],
+                                    [
+                                        78.04307657615954,
+                                        30.3254735192546
+                                    ],
+                                    [
+                                        78.04413626053218,
+                                        30.326314608960132
+                                    ],
+                                    [
+                                        78.04461129145739,
+                                        30.32629358180523
+                                    ],
+                                    [
+                                        78.0458658603103,
+                                        30.32609382361146
+                                    ],
+                                    [
+                                        78.04617036731435,
+                                        30.32432752290684
+                                    ],
+
+                                ]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': '#6d8fed'
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [
+                                    [
+                                        78.04617163497892,
+                                        30.324349790671235
+                                    ],
+                                    [
+                                        78.04527793142847,
+                                        30.323814932482463
+                                    ],
+                                    [
+                                        78.04362160085094,
+                                        30.324411504889838
+                                    ],
+                                    [
+                                        78.04270406520556,
+                                        30.323866361281432
+                                    ],
+                                    [
+                                        78.04351435642508,
+                                        30.323732646348276
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': '#e02312'
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [
+                                    [
+                                        78.04206059865044,
+                                        30.323537216502018
+                                    ],
+                                    [
+                                        78.04271598125297,
+                                        30.323886932793656
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': '#e0b712'
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [
+                                    [
+                                        78.0430377145318,
+                                        30.323300643008125
+                                    ],
+                                    [
+                                        78.04271598125297,
+                                        30.32292006705913
+                                    ]
+                                ]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'color': '#6d8fed'
+                            },
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': [
+                                    [
+                                        78.04351435642508,
+                                        30.323732646348276
+                                    ],
+                                    [
+                                        78.04304963057928,
+                                        30.323300643008125
+                                    ],
+                                    [
+                                        78.04206059865044,
+                                        30.323526930709733
+                                    ],
+                                    [
+                                        78.04078558158642,
+                                        30.322323485568745
+                                    ],
+                                    [
+                                        78.04059492482963,
+                                        30.322950924623385
+                                    ]
+                                ]
+                            }
+                        }
+                    ]
+
+                }
+            });
+            map.addLayer({
+                'id': 'route',
+                'type': 'line',
+                'source': 'route',
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': ['get', 'color'],
+                    'line-width': 4
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
