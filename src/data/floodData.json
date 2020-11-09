@@ -1,0 +1,317 @@
+{
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.758610,29.519448]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Ramganga Dam",
+            "ph": "6.7",
+            "turbidity":"0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.831744,30.240401]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Srinagar Dam",
+            "ph": "6.7",
+            "turbidity":"0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.480354,30.378057]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Tehri dam",
+            "ph":   "6.8",
+            "turbidity": "0.8"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.497392,30.260094]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "koteswar dam",
+            "ph":   "6.5",
+            "turbidity": "1.1"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [80.571999,29.978503]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "dhauligana dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.9014863,29.3235009]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Tumaria Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.804386,28.9608324]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Nanak Sagar Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.5264223,30.739167]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Maneri Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [77.7889223,30.613611]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Ichari Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.2629523,29.1278717]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Haripura Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.6149587,28.9002182]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Dhora Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.5504122,29.3430553]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Bhimtal Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.0978617,29.1018721]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Baur Dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [79.6404425,28.8755196]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Baigul dam",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [80.311215,29.976482]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Dharma Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.592018,30.398196]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Bhilangana Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.750000,30.751279]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Valley Of Flowers",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.495793,30.280043]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Bhagirathi valley red zone",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [75.0013615,29.9956598]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Johar Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [80.7503374,30.3099103]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Kuthi Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [80.2025949,29.5826058]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Saur Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [77.3131769,29.8868891]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "The Doon Valley ",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [78.4050034,31.1402462]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Har Ki Doon Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [77.490734,30.7128057]
+        },
+        "properties": {
+            "pic": "valley",
+            "title": "Tons Valley",
+            "ph":   "7.5",
+            "turbidity": "0.9"
+        }
+    }
+    ]
+}
+

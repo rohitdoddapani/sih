@@ -40,7 +40,8 @@ class Login extends React.Component {
     .then((u)=>{
       console.log(u);
      }).catch((error) => {
-        console.log(error);
+        console.log(error,error.message);
+        alert(error.message)
       });
   }
   render() {

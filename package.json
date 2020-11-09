@@ -1,5 +1,6 @@
 {
   "name": "react",
+  "proxy": "http://192.168.0.102:5000",
   "version": "1.0.0",
   "description": "React ",
   "main": "index.js",
@@ -31,6 +32,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "axios": "^0.21.0",
     "chart.js": "2.7.3",
     "classnames": "2.2.6",
     "firebase": "^7.14.0",
@@ -39,14 +41,17 @@
     "nouislider": "13.1.1",
     "react": "16.8.4",
     "react-chartjs-2": "2.7.4",
+    "react-cool-tabs": "^1.1.6",
     "react-copy-to-clipboard": "5.0.1",
     "react-datetime": "2.16.3",
     "react-dom": "16.8.4",
     "react-google-maps": "9.4.5",
     "react-map-gl": "^5.2.3",
+    "react-redux": "^7.2.2",
     "react-router-dom": "4.3.1",
     "react-scripts": "2.1.8",
-    "reactstrap": "7.1.0"
+    "reactstrap": "7.1.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/googlemaps": "3.30.18",

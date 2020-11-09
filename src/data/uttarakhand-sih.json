@@ -9,8 +9,11 @@
         },
         "properties": {
             "title": "Main",
-            "ph": "6.7",
-            "turbidity":"0.9"
+            "ph": "7.7",
+            "turbidity":"0.9 NTU",
+            "valve": true,
+            "TDS": "78 ppm",
+            "flowrate":69
         }
     },
     {
@@ -23,7 +26,10 @@
         "properties": {
             "title": "Junction",
             "ph": "6.7",
-            "turbidity":"0.9"
+            "turbidity":"0.9",
+            "valve": true,
+            "TDS": 44,
+            "flowrate":69
         }
     },
     {
@@ -35,8 +41,11 @@
         },
         "properties": {
             "title": "DIV121",
-            "ph":   "6.8",
-            "turbidity": "0.8"
+            "ph":   "7.8",
+            "turbidity": "1.8 NTU",
+            "valve": true,
+            "TDS": "300 ppm",
+            "flowrate": 26
         }
     },
     {
@@ -48,8 +57,12 @@
         },
         "properties": {
             "title": "DIV134",
-            "ph":   "6.5",
-            "turbidity": "1.1"
+            "ph":   "7.2",
+            "turbidity": "0.6 NTU",
+            "valve": true,
+            "TDS": 44,
+            "flowrate":24,
+            "dum":[true,false]
         }
     },
     {
@@ -61,8 +74,11 @@
         },
         "properties": {
             "title": "DIV156",
-            "ph":   "7.5",
-            "turbidity": "0.9"
+            "ph":   "7.6",
+            "turbidity": "0.8 NTU",
+            "valve": true,
+            "TDS": "89 ppm",
+            "flowrate": 19
         }
     }
     ]

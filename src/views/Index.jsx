@@ -120,7 +120,7 @@ class Index extends React.Component {
                 </CardBody>
               </Card>
             </Col>
-            {/* <Col xl="4">
+           {/* <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
@@ -142,15 +142,15 @@ class Index extends React.Component {
                   </div>
                 </CardBody>
               </Card>
-            </Col>
+            </Col> */}
           </Row>
-          <Row className="mt-5">
-            <Col className="mb-5 mb-xl-0" xl="8">
+          {/* <Row className="mt-5">
+            <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">Page visits</h3>
+                      <h3 className="mb-0">Dams & Valley's </h3>
                     </div>
                     <div className="col text-right">
                       <Button
@@ -167,25 +167,22 @@ class Index extends React.Component {
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                     <tr>
-                      <th scope="col">Page name</th>
-                      <th scope="col">Visitors</th>
-                      <th scope="col">Unique users</th>
-                      <th scope="col">Bounce rate</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Area</th>
+                      <th scope="col">Probability</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">/argon/</th>
+                      <th scope="row">Ramganga Dam</th>
                       <td>4,569</td>
-                      <td>340</td>
                       <td>
                         <i className="fas fa-arrow-up text-success mr-3" />{" "}
                         46,53%
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/index.html</th>
-                      <td>3,985</td>
+                      <th scope="row">Srinagar Dam</th>
                       <td>319</td>
                       <td>
                         <i className="fas fa-arrow-down text-warning mr-3" />{" "}
@@ -193,8 +190,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/charts.html</th>
-                      <td>3,513</td>
+                      <th scope="row">Tehri Dam</th>
                       <td>294</td>
                       <td>
                         <i className="fas fa-arrow-down text-warning mr-3" />{" "}
@@ -202,17 +198,47 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/tables.html</th>
+                      <th scope="row">Koteswara Dam</th>
                       <td>2,050</td>
-                      <td>147</td>
                       <td>
                         <i className="fas fa-arrow-up text-success mr-3" />{" "}
                         50,87%
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/profile.html</th>
-                      <td>1,795</td>
+                      <th scope="row">Dhauligana Dam</th>
+                      <td>190</td>
+                      <td>
+                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                        46,53%
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Dharma Valley</th>
+                      <td>190</td>
+                      <td>
+                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                        46,53%
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Bhilangana valley</th>
+                      <td>190</td>
+                      <td>
+                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                        46,53%
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Valley of Flowers</th>
+                      <td>190</td>
+                      <td>
+                        <i className="fas fa-arrow-down text-danger mr-3" />{" "}
+                        46,53%
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Bhagiradha valley red zone</th>
                       <td>190</td>
                       <td>
                         <i className="fas fa-arrow-down text-danger mr-3" />{" "}
@@ -222,8 +248,8 @@ class Index extends React.Component {
                   </tbody>
                 </Table>
               </Card>
-            </Col>
-            <Col xl="4">
+                          </Col> */}
+            {/* <Col xl="4">
               <Card className="shadow">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
@@ -330,8 +356,8 @@ class Index extends React.Component {
                   </tbody>
                 </Table>
               </Card>
-            </Col> */}
-          </Row>
+            </Col>  
+          </Row>*/}
         </Container>
       </>
     );

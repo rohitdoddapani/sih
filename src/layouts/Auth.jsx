@@ -60,7 +60,7 @@ class Auth extends React.Component {
   };
   render() {
     return (
-      
+
       <div>
         {this.state.user 
         ?  <Redirect to="/admin/index" /> 

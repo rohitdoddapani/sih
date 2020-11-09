@@ -5,6 +5,44 @@ import React from "react";
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 
 class Header extends React.Component {
+
+  state={
+    value: 0,
+    qty: 2000,
+  };
+  // componentDidMount(){
+  //   for(var i=1;i<4;i++){
+  //     setTimeout(() => {
+  //       this.setState({value: i*10})
+  //     }, 3000);
+  //   }
+    
+  // };
+  x=2000
+  min = 20;
+  max = 50;
+
+ 
+
+  tick() {
+    this.setState(state => ({
+      qty: this.x + Math.floor(Math.random() * (this.max - this.min))
+    }));
+    this.x=this.state.qty;
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({value: 1})
+    }, 10000);
+    this.interval = setInterval(() => this.tick(), 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  
+
   render() {
     return (
       <>
@@ -25,7 +63,7 @@ class Header extends React.Component {
                             Leak Alerts 
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            25
+                            {this.state.value}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -55,7 +93,7 @@ class Header extends React.Component {
                             Connections
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            60230
+                            3
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -84,7 +122,7 @@ class Header extends React.Component {
                           >
                             Total usage
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">92000 L</span>
+                          <span className="h2 font-weight-bold mb-0">{this.state.qty} L</span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
