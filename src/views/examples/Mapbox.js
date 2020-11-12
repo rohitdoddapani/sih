@@ -18,6 +18,7 @@ export default function Mapbox() {
     const [selectPoint, setSelectedPoint] = useState(null);
     const [leak, setLeak] = useState({value:0});
     const [cont, setCont] = useState({value:0});
+    const [state, setState] = useState(null);
 
     
     useEffect( () => {
@@ -41,16 +42,17 @@ export default function Mapbox() {
         }, 7000);
     
         const db = fire.firestore()
-        db.collection("mapData").get().then( snapshot => {
+        db.collection("nodes").get().then( snapshot => {
         const users = [];
         console.log(snapshot);
         snapshot.forEach(doc => {
             console.log(doc.data());
-            
+            users.push(doc.data())
           });
         //const values = snapshot.data();
         //const keys = Object.keys(snapshot.data());
-        console.log(users);
+        console.log(users.slice(-2,));
+        setState(users.slice(-2,));
         })
         .catch(err => console.log(err));
 
@@ -83,7 +85,11 @@ export default function Mapbox() {
                     <div><span style={{backgroundColor: "#fff000"}}></span>Detected Contaminants</div>
                     
                 </div>
-                
+                {state? state.map((point) => (
+                    console.log(point),
+                    console.log(point.coordinates[1]),
+                    console.log(point.readings.slice(-1)[0].pH)
+                )) : ""}
                 {marData.features.map((point) => (
                     
                     <Marker key={point.properties.title}
@@ -158,7 +164,7 @@ export default function Mapbox() {
                                         
                                         <div className="meta-info-row">
                                             FlowRate: 
-                                            <b>44</b>
+                                            <b>{selectPoint.properties.flowrate}</b>
                                         </div>
                                         <div className="meta-info-row">
                                             Valve

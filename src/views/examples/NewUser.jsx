@@ -1,6 +1,8 @@
 
 import React from "react";
-
+import firebase from 'firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // reactstrap components
 import {
     Button,
@@ -24,20 +26,35 @@ import CoolTabs from 'react-cool-tabs';
 import './custom.css'
 import axios from "axios";
 
-const hosturl="http://127.0.0.1/"
+const hosturl="https://whispering-atoll-97798.herokuapp.com"
 
 class Content1 extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-          nodeId: '',
+          idToken: '',
+          nodeId:	'',
+          firstName: '',
+          lastName:	'',
+          email: '',
+          address:	'',	
+          password:	'',
+          phoneNumber:	'',
+          city:	'',
+          state: '',
+          postalCode: '',
         }
     
+      }
+      async componentDidMount() {
+
+        const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
+        this.setState({idToken: idToken})
       }
       onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
       };
-      handleNewUserSubmit = e => {
+      handleNewUserSubmit = async (e) => {
         e.preventDefault();
         const newUser = {
           nodeId:	this.state.nodeId,
@@ -51,15 +68,29 @@ class Content1 extends React.Component {
           state:	this.state.state,
           postalCode:	this.state.postalCode,
         };
-     console.log(newUser);
-      
-      axios.
-      post(hosturl+"/api/v1/user/new-user", newUser)
-      .then(res => {
+        console.log(newUser);
+        const idToken = this.state.idToken
+    //   axios.
+    //   post(hosturl+"/api/v1/user/new-user", newUser)
+    //   .then(res => {
+    //     console.log(res);
+    //   }) // re-direct to client on successful creation
+    //   .catch(err =>
+    //     console.log(err)
+    //   );
+      await axios.post(hosturl+"/api/v1/user/new-user", newUser, {
+        headers: {
+        'Content-Type': 'application/json',
+        'authtoken': idToken
+        }
+      }).then(res => {
         console.log(res);
+        toast("user created");
       }) // re-direct to client on successful creation
-      .catch(err =>
-        console.log(err)
+      .catch(err =>{
+        toast(err.message);
+        console.log(err.message);
+      }
       );
     };
     render() {
@@ -272,10 +303,78 @@ class Content1 extends React.Component {
             </div>
             </Form>
         </CardBody>
+        <ToastContainer />
       </div>
     }
   }
   class Content2 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.fetchData();
+        this.state = {
+          
+        }
+    
+      }
+      fetchData = async () => {
+        const db = fire.firestore();
+        // var sdata = db.collection("nodes").valueChanges().map(document => {
+        //     return document(a => {
+        //       const data = a.payload.doc.data();//Here is your content
+        //       const id = a.payload.doc.id;//Here is the key of your document
+        //       return { id, ...data };
+        //     });
+        // });
+        db.collection("nodes")
+            .onSnapshot((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.data()); // For data inside doc
+                    console.log(doc.id); // For doc name
+                })
+            })
+        //console.log(sdata);
+        // db.collection("nodes").get().then( snapshot => {
+        //   const nodes = []
+        //   snapshot.forEach(doc => {
+        //     const data = doc.data()
+        //     nodes.push(data)
+        //   })
+        //   this.setState({nodes: nodes});
+        //   console.log(this.state.nodes);
+        // })
+        // .catch(err => console.log(err));
+        
+      }
+      onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+      };
+      handleNewNodeSubmit = async (e) => {
+        e.preventDefault();
+        const coord = [this.state.latitude,this.state.longitude]
+        
+        const parent = this.state.neighbourhood;
+        const node = this.state.nodeId;
+        console.log(newNode);
+        const db = fire.firestore();
+        const newNode = db.collection('nodes').doc(`${node}`);
+        const Node = db.collection('nodes').doc(`${parent}`);
+        await newNode.set({
+            coordinates: coord,
+            neighborhood: []
+        }).then( () => {toast("node created")}).catch(err => toast("Error Occured"))
+        await Node.update({
+            neighborhood: firebase.firestore.FieldValue.arrayUnion(`${node}`)
+        }).then( () => {console.log("done")}).catch(err => toast("Error Occured"))
+        //console.log(res);
+    //   axios.
+    //   post(hosturl+"/api/v1/user/new-user", newNode)
+    //   .then(res => {
+    //     console.log(res);
+    //   }) // re-direct to client on successful creation
+    //   .catch(err =>
+    //     console.log(err)
+    //   );
+    };
     render() {
       return <div >
       <CardBody>
@@ -289,15 +388,16 @@ class Content1 extends React.Component {
                   <FormGroup>
                   <label
                       className="form-control-label"
-                      htmlFor="input-username"
+                      htmlFor="nodeId"
                   >
                       NodeID
                   </label>
                   <Input
                       className="form-control-alternative"
-                      id="input-username"
-                      placeholder="Device Id"
+                      id="nodeId"
+                      placeholder="NodeId"
                       type="text"
+                      onChange={this.onChange}
                   />
                   </FormGroup>
               </Col>
@@ -305,15 +405,16 @@ class Content1 extends React.Component {
                   <FormGroup>
                   <label
                       className="form-control-label"
-                      htmlFor="input-email"
+                      htmlFor="input-username"
                   >
-                      Email address
+                      Neighbourhood Node
                   </label>
                   <Input
                       className="form-control-alternative"
-                      id="input-email"
-                      placeholder="jesse@example.com"
-                      type="email"
+                      id="neighbourhood"
+                      placeholder="Neighbourhood"
+                      type="text"
+                      onChange={this.onChange}
                   />
                   </FormGroup>
               </Col>
@@ -329,10 +430,10 @@ class Content1 extends React.Component {
                   </label>
                   <Input
                       className="form-control-alternative"
-                      defaultValue="Lucky"
-                      id="input-latitude"
+                      id="latitude"
                       placeholder="Latitude"
-                      type="text"
+                      type="number"
+                      onChange={this.onChange}
                   />
                   </FormGroup>
               </Col>
@@ -346,10 +447,10 @@ class Content1 extends React.Component {
                   </label>
                   <Input
                       className="form-control-alternative"
-                      defaultValue="Jesse"
-                      id="input-longitude"
+                      id="longitude"
                       placeholder="Last name"
-                      type="text"
+                      type="number"
+                      onChange={this.onChange}
                   />
                   </FormGroup>
               </Col>
@@ -360,13 +461,14 @@ class Content1 extends React.Component {
           <div className="text-center">
               <Button
                   color="primary"
-                  onClick={e => e.preventDefault()}
+                  onClick={this.handleNewNodeSubmit}
               >
                   Submit
               </Button>
           </div>
           </Form>
       </CardBody>
+      <ToastContainer />
     </div>
     }
   }
@@ -408,12 +510,9 @@ class NewUser extends React.Component {
         <Container className="mt-30" fluid>
             <CoolTabs
                 tabKey={'1'}
-                style={{ width:  1000, height:  900, background:  'white' }}
-                activeTabStyle={{ background:  'blue', color:  'white' }}
-                unActiveTabStyle={{ background:  'lightblue', color:  'black' }}
-                activeLeftTabBorderBottomStyle={{ background:  'yellow', height:  4 }}
-                activeRightTabBorderBottomStyle={{ background:  'yellow', height:  4 }}
-                
+                style={{ width:  1150, height:  900, background:  'white',borderRadius: "20px" }}
+                activeTabStyle={{ background:  'blue',height: "120%" , color:  'white', borderRadius: "10px 0 0 10px" }}
+                unActiveTabStyle={{ background:  'lightblue',height: "120%" , color:  'black', borderRadius: "0 10px 10px 0" }}
                 
                 leftTabTitle={'New User'}
                 rightTabTitle={'New Node'}
@@ -424,6 +523,7 @@ class NewUser extends React.Component {
             />
           
         </Container>
+        <ToastContainer />
         </div>
       </>
     );

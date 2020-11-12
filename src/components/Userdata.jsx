@@ -38,25 +38,19 @@ class Userdata extends React.Component {
   state = {
     activeNav: 1,
     chartExample1Data: "data1",
-    divDetails:null
+    divDetails: [],
   };
   componentDidMount(){
     //Receiving data from props at Tables.jsx
-    var x = this.props.location.state.deviceid;
-    //console.log(this.props.location.state,x);
+    var x = this.props.location.state.nodeId;
+    console.log(this.props.location.state,x);
     //Fetching data from firestore from document id as device id of user
     const db = fire.firestore()
-    db.collection("devices").doc(`${x}`).get().then( snapshot => {
+    db.collection("nodes").doc(`${x}`).get().then( snapshot => {
       const users = [];
-      //console.log(snapshot.data());
-      const values = Object.values(snapshot.data());
-      const keys = Object.keys(snapshot.data());
-      for(var i=0;i<keys.length;i++){
-        var k = keys[i];
-        var v = values[i];
-        users[k]=v;
-      }
-      this.setState({divDetails: Array(users)})
+      console.log(snapshot.data().readings);
+      let readings = snapshot.data().readings.slice(-1)[0];
+      this.setState({divDetails: readings})
     })
     .catch(err => console.log(err));
   }
@@ -80,6 +74,7 @@ class Userdata extends React.Component {
     }
   }
   render() {
+    console.log(this.state.divDetails);
     return (
       <>
         {/* <Header /> */}
@@ -89,9 +84,7 @@ class Userdata extends React.Component {
 
           
           <Row style={{background: '#00bfff'}}>
-          { this.state.divDetails &&
-                this.state.divDetails.map(div => {
-                  return (
+          { this.state.divDetails ?
             <Col className="" style={{marginTop: '100px'}}>
               
               <Col  >
@@ -103,11 +96,11 @@ class Userdata extends React.Component {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          {this.state.divDetails}
+                          {this.state.divDetails.firstName}
                           User
                           </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          {this.props.location.state.name}
+                          {this.props.location.state.firstName}
                           </span>
                       </div>
                       <Col className="col-auto">
@@ -119,7 +112,7 @@ class Userdata extends React.Component {
                     <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-nowrap">User ID &nbsp; </span>
                       <span className="text-success mr-2">
-                        {this.props.location.state.deviceid}
+                        {this.props.location.state.nodeId}
                         </span>{" "}
 
                     </p>
@@ -140,7 +133,8 @@ class Userdata extends React.Component {
                                 Leakages
                               </CardTitle>
                               <span className="h2 font-weight-bold mb-0">
-                                {div.leakes}
+                                {/* {div.leakes} */}
+                                {this.props.location.state.leakes}
                               </span>
                             </div>
 
@@ -164,7 +158,8 @@ class Userdata extends React.Component {
                                 Bill
                               </CardTitle>
                               <span className="h2 font-weight-bold mb-0">
-                                {div.bill}
+                                {/* {div.bill} */}
+                                {this.props.location.state.bill ? this.props.location.state.monthBill : "--"}
                               </span>
                             </div>
 
@@ -192,7 +187,7 @@ class Userdata extends React.Component {
                             PH Value
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {div.ph}
+                            {this.state.divDetails.pH}
                           </span>
                         </div>
 
@@ -216,7 +211,7 @@ class Userdata extends React.Component {
                             Turbidity
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {div.turbidity}
+                            {this.state.divDetails.turbidity}
                           </span>
                         </div>
 
@@ -229,9 +224,8 @@ class Userdata extends React.Component {
                   </Card>
                 </Col>
               </Row>
-            </Col>
-            )
-          })}
+            </Col> : <div></div>
+            }
             <Col className="mb-6 mb-xl-0" xl="7" style={{marginTop: '100px'}}>
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">

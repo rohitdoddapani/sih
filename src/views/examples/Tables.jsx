@@ -36,7 +36,7 @@ class Tables extends React.Component {
   }
   fetchData = async () => {
     const db = fire.firestore()
-    db.collection("Users").get().then( snapshot => {
+    db.collection("users").get().then( snapshot => {
       const users = []
       snapshot.forEach(doc => {
         const data = doc.data()
@@ -82,18 +82,18 @@ class Tables extends React.Component {
                       this.state.users && 
                       this.state.users.map(user => {
                         return (
-                          <tr>
+                          <tr key={user.email}>
                             <th scope="row">
                               <Media className="align-items-center">
                                 
                                 <Media>
                                   <span className="mb-0 text-sm">
-                                    {user.deviceid}
+                                    {user.nodeId}
                                   </span>
                                 </Media>
                               </Media>
                             </th>
-                            <td>{user.name}</td>
+                            <td>{user.firstName}</td>
                             <td>
                               {user.address}
                             </td>
