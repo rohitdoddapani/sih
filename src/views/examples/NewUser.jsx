@@ -50,6 +50,7 @@ class Content1 extends React.Component {
 
         const idToken = await firebase.auth().currentUser.getIdToken(/* forceRefresh */ true)
         this.setState({idToken: idToken})
+        console.log(idToken)
       }
       onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
@@ -510,7 +511,7 @@ class NewUser extends React.Component {
         <Container className="mt-30" fluid>
             <CoolTabs
                 tabKey={'1'}
-                style={{ width:  1150, height:  900, background:  'white',borderRadius: "20px" }}
+                style={{ minWidth:  1000, height:  900, background:  'white',borderRadius: "20px" }}
                 activeTabStyle={{ background:  'blue',height: "120%" , color:  'white', borderRadius: "10px 0 0 10px" }}
                 unActiveTabStyle={{ background:  'lightblue',height: "120%" , color:  'black', borderRadius: "0 10px 10px 0" }}
                 

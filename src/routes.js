@@ -2,6 +2,7 @@
 import Index from "views/Index.jsx";
 import Profile from "views/examples/Profile.jsx";
 import Maps from "views/examples/Maps.jsx";
+import FloodMaps from "views/examples/FloodMaps.jsx";
 //import Mapbox from "components/Mapbox.js"
 import Register from "views/examples/Register.jsx";
 import Login from "views/examples/Login.jsx";
@@ -34,6 +35,13 @@ var routes = [
     layout: "/admin"
   },
   {
+    path: "/floodmaps",
+    name: "FloodMap",
+    icon: "ni ni-square-pin text-info",
+    component: FloodMaps,
+    layout: "/admin"
+  },
+  {
     path: "/Users",
     name: "Users",
     icon: "ni ni-bullet-list-67 text-red",
@@ -47,13 +55,13 @@ var routes = [
     component: NewUser,
     layout: "/admin"
   },
-  {
-    path: "/my-profile",
-    name: "My Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/my-profile",
+  //   name: "My Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin"
+  // },
   {
     path: "/login",
     name: "Login",

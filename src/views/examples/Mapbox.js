@@ -4,6 +4,12 @@ import * as marData from '../../data/uttarakhand-sih.json';
 import * as lines from '../../data/lines.json';
 import fire from '../../config/Fire';
 import swal from 'sweetalert';
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { setEmitFlags } from 'typescript';
+
+const hosturl="https://whispering-atoll-97798.herokuapp.com"
 
 export default function Mapbox() {
     
@@ -11,7 +17,7 @@ export default function Mapbox() {
         // center: [78.04263324487601, 30.32433658134211],
         latitude: 30.3223,
         longitude: 78.043,
-        width: "155vh",
+        width: "156vh",
         height: "80vh",
         zoom: 16.7
     });
@@ -19,40 +25,41 @@ export default function Mapbox() {
     const [leak, setLeak] = useState({value:0});
     const [cont, setCont] = useState({value:0});
     const [state, setState] = useState(null);
+    const [valvestate, setValveState] = useState(null);
+    const [flag, setFlag] = useState(0);
 
     
     useEffect( () => {
         
-        window.setTimeout(() => {
-            setLeak({value: 1});
-            //console.log(leak);
-            swal({
-                text: "leak detected!",
-                icon: "info"
-            });
-        }, 5000);
+        // window.setTimeout(() => {
+        //     setLeak({value: 1});
+        //     //console.log(leak);
+        //     swal({
+        //         text: "leak detected!",
+        //         icon: "info"
+        //     });
+        // }, 5000);
 
-        window.setTimeout(() => {
-            setCont({value: 1});
-            //console.log(leak);
-            swal({
-                text: "water contamination detected!",
-                icon: "info"
-            });
-        }, 7000);
+        // window.setTimeout(() => {
+        //     setCont({value: 1});
+        //     //console.log(leak);
+        //     swal({
+        //         text: "water contamination detected!",
+        //         icon: "info"
+        //     });
+        // }, 7000);
     
         const db = fire.firestore()
         db.collection("nodes").get().then( snapshot => {
         const users = [];
         console.log(snapshot);
         snapshot.forEach(doc => {
-            console.log(doc.data());
-            users.push(doc.data())
+            console.log(doc.data(),doc.id);
+            if(doc.id != "a1"){
+                users.push(doc.data())
+            }
           });
-        //const values = snapshot.data();
-        //const keys = Object.keys(snapshot.data());
-        console.log(users.slice(-2,));
-        setState(users.slice(-2,));
+        setState(users);
         })
         .catch(err => console.log(err));
 
@@ -68,13 +75,74 @@ export default function Mapbox() {
         }
     }, [])
 
+    const valveChange = async (e) => {
+        e.preventDefault();
+        let val;
+        console.log(flag,valvestate)
+        if(flag == 0){
+            setValveState(e.target.value)
+            setFlag(1)
+            val = e.target.value
+        }else{
+            val = valvestate
+        }
+        console.log(flag,valvestate)
+        const title = e.target.title;
+        //let val = e.target.value;
+        let res_val;
+        if(val==0){
+            res_val = 1
+        }else{
+            res_val = 0
+        }
+        console.log(val,res_val);
+        const valveData = {
+            valveId: 't1',
+            "LED_Control": res_val
+        }
+        //to remove
+        const db = fire.firestore()
+        const valve_Change = db.collection('nodes').doc(`${title}`);
+        await valve_Change.update({
+            valve: res_val
+        }).then( () => {
+            setValveState(res_val)
+            if(val==1){
+                toast("valve stopped");
+            }else{
+                toast("valve opened");
+            }
+        })
+        .catch(err => toast("Error Occured"))
+        // await axios.post(hosturl+"/api/v1/valve-data/valve-status", valveData)
+        //     .then(async (res)  => {
+        //     console.log(res);
+        //     const db = fire.firestore()
+        //     const valve_Change = db.collection('nodes').doc(`${title}`);
+        //     await valve_Change.update({
+        //         valve: res_val
+        //     }).then( () => {
+        //         if(val==1){
+        //             toast("valve stopped");
+        //         }else{
+        //             toast("valve opened");
+        //         }
+        //         }).catch(err => toast("Error Occured"))
+            
+        //   }) // re-direct to client on successful creation
+        //   .catch(err =>{
+        //     toast(err.message);
+        //     console.log(err.message);
+        //   }
+        //   );
+    }
     
     return (
         <div>
             <ReactMapGL {...viewport}
                 mapboxApiAccessToken={"pk.eyJ1Ijoicm9oaXQ1MjIiLCJhIjoiY2s1OXA5bzc3MDB0YzNvbW0zZmQ4ZDk0eCJ9._tqjcpuZOcf8tDUUqLRpcw"}
-                //mapStyle="mapbox://styles/rohit522/ck8zompbe0lb41irqlgfpm3od"
-                mapStyle="mapbox://styles/rohit522/ck9e1ipju22jr1imtcgpbrmuq"
+                //mapStyle="mapbox://styles/rohit522/ck9e1ipju22jr1imtcgpbrmuq"
+                mapStyle="mapbox://styles/rohit522/ckhgkri281k6v19mdcxx30vjx"
                 onViewportChange={viewport => {
                     setViewport(viewport);
                 }}
@@ -85,40 +153,39 @@ export default function Mapbox() {
                     <div><span style={{backgroundColor: "#fff000"}}></span>Detected Contaminants</div>
                     
                 </div>
+                {/* {state? state.map((point) => (
+                    console.log(point),
+                    console.log(point.coordinates)
+                )) : ""} */}
                 {state? state.map((point) => (
                     console.log(point),
-                    console.log(point.coordinates[1]),
-                    console.log(point.readings.slice(-1)[0].pH)
-                )) : ""}
-                {marData.features.map((point) => (
-                    
-                    <Marker key={point.properties.title}
-                        latitude={point.geometry.coordinates[1]}
-                        longitude={point.geometry.coordinates[0]}
+                    <Marker key={point.title}
+                        latitude={parseFloat(point.coordinates[1])}
+                        longitude={parseFloat(point.coordinates[0])}
                         className={`
-                            ${leak.value && point.properties.title=="DIV134"? "mark": ""}
-                            ${cont.value && point.properties.title=="DIV121"? "cont": ""}
+                            ${leak.value && point.title=="DIV134"? "mark": ""}
+                            ${cont.value && point.title=="DIV121"? "cont": ""}
                         `}
                     >
                         
-                        {point.properties.title=='Main'?
+                        {point.title=='r1'?
                             <div className="main" onClick={(e) => {
                                 e.preventDefault();
                                 setSelectedPoint(point);
                             }}></div>
                             :
-                            <div className={point.properties.title=='Junction'? "junction": "marker"} onClick={(e) => {
+                            <div className={point.title=='j1'? "junction": "marker"} onClick={(e) => {
                                 e.preventDefault();
                                 setSelectedPoint(point);
                             }}></div>
                         }
                         
                     </Marker>
-                ))}
+                )) : ""}
                 {selectPoint ? (
                     
-                    <Popup latitude={selectPoint.geometry.coordinates[1]}
-                        longitude={selectPoint.geometry.coordinates[0]}
+                    <Popup latitude={parseFloat(selectPoint.coordinates[1])}
+                        longitude={parseFloat(selectPoint.coordinates[0])}
                         onClose={() => {
                             setSelectedPoint(null);
                         }}
@@ -145,14 +212,14 @@ export default function Mapbox() {
                                 </label>waterlevel,temp,humidity
                             </div>
                         </div> */}
-                        {selectPoint.properties.title=='Junction'?
+                        {selectPoint.title=='j1'?
                             <div>
                             <div className="table-info-wrapper">
                                 <div className="table-info-row">
                                     <div className="meta-info">
                                         <div className="meta-info-row">
                                             DeviceID
-                                            <b>Junction</b>
+                                            <b>j1</b>
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +231,7 @@ export default function Mapbox() {
                                         
                                         <div className="meta-info-row">
                                             FlowRate: 
-                                            <b>{selectPoint.properties.flowrate}</b>
+                                            <b>{selectPoint.readings.slice(-1)[0].FR}</b>
                                         </div>
                                         <div className="meta-info-row">
                                             Valve
@@ -173,8 +240,9 @@ export default function Mapbox() {
                                                     type="checkbox"
                                                     className="toggle-switch-checkbox"
                                                     name="toggleSwitch"
-                                                    value="true"
-                                                    defaultChecked={selectPoint.properties.valve}
+                                                    value={selectPoint.valve}
+                                                    
+                                                    defaultChecked={selectPoint.valve}
                                                     id="toggleSwitch"
                                                 />
                                                 <label className="toggle-switch-label" htmlFor="toggleSwitch">
@@ -195,7 +263,7 @@ export default function Mapbox() {
                                         <div className="meta-info">
                                             <div className="meta-info-row">
                                                 DeviceID
-                                                <b>{selectPoint.properties.title}</b>
+                                                <b>{selectPoint.title}</b>
                                             </div>
                                         </div>
                                     </div>
@@ -206,19 +274,19 @@ export default function Mapbox() {
                                         <div className="meta-info">
                                             <div className="meta-info-row">
                                                 PH: 
-                                                <b>{selectPoint.properties.ph}</b>
+                                                <b>{selectPoint.readings.slice(-1)[0].ph}</b>
                                             </div>
                                             <div className="meta-info-row">
                                                 Turbidity: 
-                                                <b>{selectPoint.properties.turbidity}</b>
+                                                <b>{selectPoint.readings.slice(-1)[0].turb}</b>
                                             </div>
-                                            <div className="meta-info-row">
+                                            {/* <div className="meta-info-row">
                                                 TDS: 
-                                                <b>{selectPoint.properties.TDS}</b>
-                                            </div>
+                                                <b>{selectPoint.readings.slice(-1)[0].TDS}</b>
+                                            </div> */}
                                             <div className="meta-info-row">
                                                 FlowRate: 
-                                                <b>{selectPoint.properties.flowrate}</b>
+                                                <b>{selectPoint.readings.slice(-1)[0].FR}</b>
                                             </div>
                                             <div className="meta-info-row">
                                                 Valve
@@ -227,8 +295,10 @@ export default function Mapbox() {
                                                         type="checkbox"
                                                         className="toggle-switch-checkbox"
                                                         name="toggleSwitch"
-                                                        value="true"
-                                                        defaultChecked={selectPoint.properties.valve}
+                                                        value={selectPoint.valve}
+                                                        onChange={(e) => valveChange(e)}
+                                                        defaultChecked={selectPoint.valve}
+                                                        title={selectPoint.title}
                                                         id="toggleSwitch"
                                                     />
                                                     <label className="toggle-switch-label" htmlFor="toggleSwitch">
@@ -249,6 +319,7 @@ export default function Mapbox() {
                 ) : null}
                 
             </ReactMapGL>
+            <ToastContainer />
         </div>
     )
 }

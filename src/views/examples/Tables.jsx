@@ -37,11 +37,12 @@ class Tables extends React.Component {
   fetchData = async () => {
     const db = fire.firestore()
     db.collection("users").get().then( snapshot => {
-      const users = []
+      let users = []
       snapshot.forEach(doc => {
         const data = doc.data()
         users.push(data)
       })
+      users = users.slice(1,)
       this.setState({users: users});
       //console.log(this.state.users);
     })

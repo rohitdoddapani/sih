@@ -3,7 +3,7 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
-
+import fire from '../../config/Fire';
 class Header extends React.Component {
 
   state={
@@ -36,6 +36,17 @@ class Header extends React.Component {
       this.setState({value: 1})
     }, 10000);
     this.interval = setInterval(() => this.tick(), 2000);
+    const db = fire.firestore()
+    db.collection("globals").get().then( snapshot => {
+      const users = [];
+      console.log(snapshot);
+      snapshot.forEach(doc => {
+          console.log(doc.data());
+          users.push(doc.data())
+        });
+      this.setState({globals: users})
+    })
+    .catch(err => console.log(err));
   }
 
   componentWillUnmount() {
@@ -51,7 +62,7 @@ class Header extends React.Component {
             <div className="header-body">
               {/* Card stats */}
               <Row>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -63,7 +74,7 @@ class Header extends React.Component {
                             Leak Alerts 
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.state.value}
+                            {this.state.globals? this.state.globals[0].current_leaks : ""}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -81,7 +92,7 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -93,7 +104,7 @@ class Header extends React.Component {
                             Connections
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            3
+                            {this.state.globals? this.state.globals[0].users : ""}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -111,7 +122,7 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                <Col lg="6" xl="4">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -122,7 +133,7 @@ class Header extends React.Component {
                           >
                             Total usage
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">{this.state.qty} L</span>
+                          <span className="h2 font-weight-bold mb-0">{this.state.globals? this.state.globals[0].water_usage: ""} L</span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -139,7 +150,7 @@ class Header extends React.Component {
                     </CardBody>
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
+                {/* <Col lg="6" xl="3">
                   <Card className="card-stats mb-4 mb-xl-0">
                     <CardBody>
                       <Row>
@@ -151,7 +162,7 @@ class Header extends React.Component {
                             Water Qty
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            73.65%
+                            73.65
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -165,10 +176,10 @@ class Header extends React.Component {
                           <i className="fas fa-arrow-up" /> 12%
                         </span>{" "}
                         <span className="text-nowrap">Since last month</span>
-                      </p> */}
+                      </p> 
                     </CardBody>
                   </Card>
-                </Col>
+                </Col> */}
               </Row>
             </div>
           </Container>
