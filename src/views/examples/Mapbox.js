@@ -22,11 +22,12 @@ export default function Mapbox() {
         zoom: 16.7
     });
     const [selectPoint, setSelectedPoint] = useState(null);
-    const [leak, setLeak] = useState({value:0});
+    const [leak, setLeak] = useState(0);
     const [cont, setCont] = useState({value:0});
     const [state, setState] = useState(null);
     const [valvestate, setValveState] = useState(null);
     const [flag, setFlag] = useState(0);
+    const [flagValve, setFlagValve] = useState('a');
 
     
     useEffect( () => {
@@ -50,6 +51,18 @@ export default function Mapbox() {
         // }, 7000);
     
         const db = fire.firestore()
+        window.setInterval(() => {
+            db.collection("globals").doc('values').get().then(data => {
+                console.log(data.data().current_leaks);
+                if(data.data().current_leaks >0){
+                    setLeak(1);
+                }else{
+                    setLeak(0);
+                }
+                console.log(leak);
+            })
+        },2000)
+        
         db.collection("nodes").get().then( snapshot => {
         const users = [];
         console.log(snapshot);
@@ -78,16 +91,18 @@ export default function Mapbox() {
     const valveChange = async (e) => {
         e.preventDefault();
         let val;
+        const title = e.target.title;
         console.log(flag,valvestate)
-        if(flag == 0){
+        //let temValve = flagValve
+        if(flag == 0 || title!=flagValve){
             setValveState(e.target.value)
             setFlag(1)
+            setFlagValve(title)
             val = e.target.value
         }else{
             val = valvestate
         }
         console.log(flag,valvestate)
-        const title = e.target.title;
         //let val = e.target.value;
         let res_val;
         if(val==0){
@@ -136,7 +151,22 @@ export default function Mapbox() {
         //   }
         //   );
     }
-    
+    const geojson = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: [
+                        [78.04318791391518, 30.323505933525098],
+                        [78.04286068425279, 30.322501109129504]
+                    ]
+                }
+            }
+        ]
+      };
     return (
         <div>
             <ReactMapGL {...viewport}
@@ -153,6 +183,17 @@ export default function Mapbox() {
                     <div><span style={{backgroundColor: "#fff000"}}></span>Detected Contaminants</div>
                     
                 </div>
+                {leak? 
+                <Source id="my-data" type="geojson" data={geojson}>
+                    <Layer
+                        id="route"
+                        type="line"
+                        paint={{
+                            'line-color': 'red',
+                            'line-width': 8
+                          }}
+                    />
+                </Source> : ""}
                 {/* {state? state.map((point) => (
                     console.log(point),
                     console.log(point.coordinates)
@@ -163,8 +204,8 @@ export default function Mapbox() {
                         latitude={parseFloat(point.coordinates[1])}
                         longitude={parseFloat(point.coordinates[0])}
                         className={`
-                            ${leak.value && point.title=="DIV134"? "mark": ""}
-                            ${cont.value && point.title=="DIV121"? "cont": ""}
+                            ${leak.value && point.title=="u1"? "mark": ""}
+                            ${cont.value && point.title=="u2"? "cont": ""}
                         `}
                     >
                         

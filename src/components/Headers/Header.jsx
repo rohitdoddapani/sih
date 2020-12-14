@@ -37,16 +37,19 @@ class Header extends React.Component {
     }, 10000);
     this.interval = setInterval(() => this.tick(), 2000);
     const db = fire.firestore()
-    db.collection("globals").get().then( snapshot => {
+    setInterval(() => {
+    db.collection("globals").doc('values').get().then( snapshot => {
       const users = [];
-      console.log(snapshot);
-      snapshot.forEach(doc => {
-          console.log(doc.data());
-          users.push(doc.data())
-        });
+      console.log(snapshot.data());
+      // snapshot.forEach(doc => {
+      //     console.log(doc.data());
+      //     users.push(doc.data())
+      //   });
+      users.push(snapshot.data());
       this.setState({globals: users})
     })
     .catch(err => console.log(err));
+    }, 20000);
   }
 
   componentWillUnmount() {
@@ -74,7 +77,7 @@ class Header extends React.Component {
                             Leak Alerts 
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.state.globals? this.state.globals[0].current_leaks : ""}
+                            {this.state.globals? this.state.globals[0].current_leaks : "--"}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -104,7 +107,7 @@ class Header extends React.Component {
                             Connections
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.state.globals? this.state.globals[0].users : ""}
+                            {this.state.globals? this.state.globals[0].users-4 : "--"}
                           </span>
                         </div>
                         <Col className="col-auto">
@@ -133,7 +136,7 @@ class Header extends React.Component {
                           >
                             Total usage
                           </CardTitle>
-                          <span className="h2 font-weight-bold mb-0">{this.state.globals? this.state.globals[0].water_usage: ""} L</span>
+                          <span className="h2 font-weight-bold mb-0">{this.state.globals? this.state.globals[0].water_usage: "--"} L</span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -181,6 +184,39 @@ class Header extends React.Component {
                   </Card>
                 </Col> */}
               </Row>
+              {this.state.globals ? this.state.globals[0].current_leaks > 0 ?
+              <Row>
+                <Col className="mt-3">
+                  <Card className="card-stats mb-4 mb-xl-0">
+                    <CardBody>
+                      <Row>
+                        <div className="col">
+                          <CardTitle
+                            tag="h5"
+                            className="text-uppercase text-muted mb-0"
+                          >
+                            Leak Alerts 
+                          </CardTitle>
+                          <span className="h2 font-weight-bold mb-0">
+                            {this.state.globals? this.state.globals[0].current_leaks : ""}
+                          </span>
+                        </div>
+                        <Col className="col-auto">
+                          <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i className="fas fa-chart-bar" />
+                          </div>
+                        </Col>
+                      </Row>
+                      {/* <p className="mt-3 mb-0 text-muted text-sm">
+                        <span className="text-success mr-2">
+                          <i className="fa fa-arrow-up" /> 3.48%
+                        </span>{" "}
+                        <span className="text-nowrap">Since last month</span>
+                      </p> */}
+                    </CardBody>
+                  </Card>
+                </Col>
+                </Row> : "" : ""}
             </div>
           </Container>
         </div>

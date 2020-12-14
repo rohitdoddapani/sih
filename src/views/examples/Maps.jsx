@@ -26,17 +26,16 @@ class Maps extends React.Component {
 
               </Card>
             </div>
-            <div className="col" style={{fontWeight:"bold",margin: "20px"}}>
+            {/* <div className="col" style={{fontWeight:"bold",margin: "20px"}}>
               Flood map
             </div>
             <div className="col ">
               <Card className="shadow border-0">
                 
                 <MapFlood />
-                {/* <img src="/mapv3.png" /> */}
         
               </Card>
-            </div>
+            </div> */}
           </Row>
         </Container>
       </>

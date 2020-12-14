@@ -152,11 +152,10 @@ class Index extends React.Component {
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
-          <Row style={{ padding: "10px" }}>
+          {/* <Row style={{ padding: "10px" }}>
             <div className="col-md-4">
             <Card style={{ backgroundColor: "#18214d" }}>
               <CardBody>
-                {/* Chart */}
                 <div className="chart" style={{ height: '290px', }}>
                   <HorizontalBar
                     data={this.state.data}
@@ -169,7 +168,6 @@ class Index extends React.Component {
             <div className="col-md-4">
             <Card style={{ backgroundColor: "#18214d" }}>
               <CardBody>
-                {/* Chart */}
                 <div className="chart" style={{ height: '290px', }}>
                   <HorizontalBar
                     data={this.state.data_turb}
@@ -182,7 +180,6 @@ class Index extends React.Component {
             <div className="col-md-4">
             <Card style={{ backgroundColor: "#18214d" }}>
               <CardBody>
-                {/* Chart */}
                 <div className="chart" style={{ height: '290px', }}>
                   <HorizontalBar
                     data={this.state.data_turb}
@@ -192,7 +189,7 @@ class Index extends React.Component {
               </CardBody>
             </Card>
             </div>
-          </Row>
+          </Row> */}
           <Row>
 
             <Col className="mb-5 mb-xl-0" xl="12">

@@ -46,7 +46,7 @@ class Userdata extends React.Component {
           label: "PH",
           data: [],
           fill: true,
-          backgroundColor: "#3287a8",
+          
           borderColor: "rgba(75,192,192,1)"
         }
       ]
@@ -61,7 +61,7 @@ class Userdata extends React.Component {
           {
             ticks: {
               suggestedMin: 0,
-              suggestedMax: 1
+              suggestedMax: 10
             }
           }
         ]
@@ -74,7 +74,6 @@ class Userdata extends React.Component {
           label: "Turbidity",
           data: [],
           fill: true,
-          backgroundColor: "#3287a8",
           borderColor: "rgba(75,192,192,1)"
         }
       ]
@@ -89,13 +88,68 @@ class Userdata extends React.Component {
           {
             ticks: {
               suggestedMin: 0,
+              suggestedMax: 1
+            }
+          }
+        ]
+      }
+    },
+    data_fr: {
+      labels: ["4:00", "4:10", "4:20", "4:30", "4:40", "4:50"],
+      datasets: [
+        {
+          label: "Flow Rate",
+          data: [],
+          fill: true,
+          
+          borderColor: "rgba(75,192,192,1)"
+        }
+      ]
+    },
+    options_fr: {
+      title: {
+        display: true,
+        text: "FLow Rate"
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              suggestedMin: 0,
               suggestedMax: 10
             }
           }
         ]
       }
-    }
-
+    },
+    data_tds: {
+      labels: ["4:00", "4:10", "4:20", "4:30", "4:40", "4:50"],
+      datasets: [
+        {
+          label: "TDS",
+          data: [],
+          fill: true,
+          
+          borderColor: "rgba(75,192,192,1)"
+        }
+      ]
+    },
+    options_tds: {
+      title: {
+        display: true,
+        text: "TDS Chart"
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 10
+            }
+          }
+        ]
+      }
+    },
   };
   componentDidMount() {
     //Receiving data from props at Tables.jsx
@@ -119,14 +173,20 @@ class Userdata extends React.Component {
   dataList = () => {
     var copy = this.state.data
     var copy_turb = this.state.data_turb
+    var copy_fr = this.state.data_fr
+    var copy_tds = this.state.data_tds
     copy.datasets[0].data = [];
     copy_turb.datasets[0].data = [];
+    copy_fr.datasets[0].data = [];
+    copy_tds.datasets[0].data = [];
     if (this.state.dataset) {
       this.state.dataset.forEach(doc => {
         copy.datasets[0].data.push(doc.ph)
         copy_turb.datasets[0].data.push(doc.turb)
+        copy_fr.datasets[0].data.push(doc.FR)
+        copy_tds.datasets[0].data.push(doc.TDS)
       })
-      this.setState({ data: copy, data_turb: copy_turb })
+      this.setState({ data: copy, data_turb: copy_turb, data_fr: copy_fr, data_tds: copy_tds })
     }
   }
   toggleNavs = (e, index) => {
@@ -425,7 +485,7 @@ class Userdata extends React.Component {
                   <CardBody>
                     {/* Chart */}
                     <div className="chart" style={{ height: '290px', }}>
-                      <Bar
+                      <Line
                         data={this.state.data}
                         options={this.state.options}
                       />
@@ -436,9 +496,33 @@ class Userdata extends React.Component {
                   <CardBody>
                     {/* Chart */}
                     <div className="chart" style={{ height: '290px', }}>
-                      <Bar
+                      <Line
                         data={this.state.data_turb}
                         options={this.state.options_turb}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Row>
+              <Row style={{ background: '#00bfff', padding: "10px" }}>
+                <Card style={{ width: "48%", marginRight: "15px" }}>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart" style={{ height: '290px', }}>
+                      <Line
+                        data={this.state.data_fr}
+                        options={this.state.options_fr}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+                <Card style={{ width: "48%", marginLeft: "20px" }}>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart" style={{ height: '290px', }}>
+                      <Line
+                        data={this.state.data_tds}
+                        options={this.state.options_tds}
                       />
                     </div>
                   </CardBody>

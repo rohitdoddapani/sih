@@ -8,6 +8,7 @@ import Register from "views/examples/Register.jsx";
 import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import NewUser from "views/examples/NewUser.jsx";
+import Charts from "views/examples/Charts.jsx";
 // import Icons from "views/examples/Icons.jsx";
 import Userdata from "components/Userdata.jsx";
 
@@ -17,6 +18,13 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
+    layout: "/admin"
+  },
+  {
+    path: "/charts",
+    name: "Charts",
+    icon: "ni ni-sound-wave text-primary",
+    component: Charts,
     layout: "/admin"
   },
   {
