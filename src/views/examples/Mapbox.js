@@ -112,44 +112,44 @@ export default function Mapbox() {
         }
         console.log(val,res_val);
         const valveData = {
-            valveId: 't1',
-            "LED_Control": res_val
+            valveId: `${title}`,
+            "data": `${res_val}`    
         }
         //to remove
-        const db = fire.firestore()
-        const valve_Change = db.collection('nodes').doc(`${title}`);
-        await valve_Change.update({
-            valve: res_val
-        }).then( () => {
-            setValveState(res_val)
-            if(val==1){
-                toast("valve stopped");
-            }else{
-                toast("valve opened");
-            }
-        })
-        .catch(err => toast("Error Occured"))
-        // await axios.post(hosturl+"/api/v1/valve-data/valve-status", valveData)
-        //     .then(async (res)  => {
-        //     console.log(res);
-        //     const db = fire.firestore()
-        //     const valve_Change = db.collection('nodes').doc(`${title}`);
-        //     await valve_Change.update({
-        //         valve: res_val
-        //     }).then( () => {
-        //         if(val==1){
-        //             toast("valve stopped");
-        //         }else{
-        //             toast("valve opened");
-        //         }
-        //         }).catch(err => toast("Error Occured"))
+        // const db = fire.firestore()
+        // const valve_Change = db.collection('nodes').doc(`${title}`);
+        // await valve_Change.update({
+        //     valve: res_val
+        // }).then( () => {
+        //     setValveState(res_val)
+        //     if(val==1){
+        //         toast("valve stopped");
+        //     }else{
+        //         toast("valve opened");
+        //     }
+        // })
+        // .catch(err => toast("Error Occured"))
+        await axios.post(hosturl+"/api/v1/valve-data/valve-status", valveData)
+            .then(async (res)  => {
+            console.log(res);
+            const db = fire.firestore()
+            const valve_Change = db.collection('nodes').doc(`${title}`);
+            await valve_Change.update({
+                valve: res_val
+            }).then( () => {
+                if(val==1){
+                    toast("valve stopped");
+                }else{
+                    toast("valve opened");
+                }
+                }).catch(err => toast("Error Occured"))
             
-        //   }) // re-direct to client on successful creation
-        //   .catch(err =>{
-        //     toast(err.message);
-        //     console.log(err.message);
-        //   }
-        //   );
+          }) // re-direct to client on successful creation
+          .catch(err =>{
+            toast(err.message);
+            console.log(err.message);
+          }
+          );
     }
     const geojson = {
         type: 'FeatureCollection',

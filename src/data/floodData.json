@@ -17,6 +17,19 @@
         "type": "Feature",
         "geometry": {
             "type": "Point",
+            "coordinates": [78.888610,29.919448]
+        },
+        "properties": {
+            "pic": "dam",
+            "title": "Prototype Dam",
+            "ph": "6.7",
+            "turbidity":"0.9"
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
             "coordinates": [78.831744,30.240401]
         },
         "properties": {
