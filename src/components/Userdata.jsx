@@ -232,7 +232,7 @@ class Userdata extends React.Component {
                           User message
                           </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
-                          {this.state.divDetails.ph < 8 ? "ph is good and Water is safe for drinking" : "ph is acidic and water may have some contamination"}
+                          {this.state.divDetails.ph < 8 &&  this.state.divDetails.ph > 6 ? "ph is good and Water is safe for drinking" : "ph is acidic and water may have some contamination"}
                         </span><br />
                         <span className="h2 font-weight-bold mb-0">
                           {this.state.divDetails.turb < 1 ? "turbidity is good and Water is safe for drinking" : "Turbidity is more and water may have some contamination"}

@@ -34,7 +34,7 @@ class Header extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({value: 1})
-    }, 10000);
+    }, 2000);
     this.interval = setInterval(() => this.tick(), 2000);
     const db = fire.firestore()
     setInterval(() => {
@@ -195,15 +195,18 @@ class Header extends React.Component {
                             tag="h5"
                             className="text-uppercase text-muted mb-0"
                           >
-                            Leak Alerts 
+                            Leak Locations
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            {this.state.globals? this.state.globals[0].current_leaks : ""}
+                            A Leak is detected and the leak my be between &nbsp;
+                            {this.state.globals? this.state.globals[0].leak_location[0] : ""}
+                            and &nbsp;
+                            {this.state.globals? this.state.globals[0].leak_location[1] : ""}
                           </span>
                         </div>
                         <Col className="col-auto">
                           <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
-                            <i className="fas fa-chart-bar" />
+                            <i className="fa fa-exclamation-triangle" aria-hidden="true"/>
                           </div>
                         </Col>
                       </Row>
