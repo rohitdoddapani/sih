@@ -49,7 +49,7 @@ class Header extends React.Component {
       this.setState({globals: users})
     })
     .catch(err => console.log(err));
-    }, 20000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -60,7 +60,8 @@ class Header extends React.Component {
   render() {
     return (
       <>
-        <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+      {/* bg-gradient-info */}
+        <div className="header bg-gradient-added pb-8 pt-5 pt-md-8" style={{background: "linear-gradient(87deg, #f12711 0, #f5af19 100%) !important"}}>
           <Container fluid>
             <div className="header-body">
               {/* Card stats */}
@@ -198,7 +199,7 @@ class Header extends React.Component {
                             Leak Locations
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
-                            A Leak is detected and the leak my be between &nbsp;
+                            A Leak is detected and the leak may be between &nbsp;
                             {this.state.globals? this.state.globals[0].leak_location[0] : ""}
                             and &nbsp;
                             {this.state.globals? this.state.globals[0].leak_location[1] : ""}

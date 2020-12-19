@@ -3324,9 +3324,10 @@ input[type="button"].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: #f5f3f3 !important;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 2px solid rgba(0, 0, 0, 0.05) !important;
   border-radius: 0.375rem; }
   .card > hr {
     margin-right: 0;
@@ -8841,6 +8842,9 @@ button.bg-lighter:hover,
 button.bg-lighter:focus {
   background-color: #cbd3da !important; }
 
+  .bg-gradient-added {
+    background: linear-gradient(87deg, #f12711 0, #f5af19 100%) !important; }
+
 .bg-gradient-primary {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important; }
 
@@ -9057,6 +9061,9 @@ a.section-darker:hover, a.section-darker:focus,
 button.section-darker:hover,
 button.section-darker:focus {
   background-color: black !important; }
+
+  .bg-gradient-added {
+    background: linear-gradient(87deg, #f12711 0, #f5af19 100%) !important; }
 
 .bg-gradient-primary {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important; }

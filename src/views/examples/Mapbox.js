@@ -115,6 +115,7 @@ export default function Mapbox() {
             valveId: `${title}`,
             "data": `${res_val}`    
         }
+        console.log(valveData)
         //to remove
         // const db = fire.firestore()
         // const valve_Change = db.collection('nodes').doc(`${title}`);

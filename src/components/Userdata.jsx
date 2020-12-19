@@ -33,6 +33,8 @@ import {
 
 import Header from "components/Headers/Header.jsx";
 import fire from "../config/Fire";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Userdata extends React.Component {
   state = {
@@ -189,6 +191,10 @@ class Userdata extends React.Component {
       this.setState({ data: copy, data_turb: copy_turb, data_fr: copy_fr, data_tds: copy_tds })
     }
   }
+  sendNotification = (e) => {
+     console.log("send user notification")
+     toast("Notification Sent")
+  }
   toggleNavs = (e, index) => {
     e.preventDefault();
     this.setState({
@@ -214,12 +220,12 @@ class Userdata extends React.Component {
       <>
         {/* <Header /> */}
 
-        {/* Page content */}
-        <Container className="pt-10" fluid>
+        {/* Page content linear-gradient(87deg, #f12711, #f5af19)*/}
+        <Container className="pt-10" style={{paddingRight: "15px",background: 'linear-gradient(45deg, #11ccef, #1174ef)'}}>
 
           {this.state.divDetails ?
             <>
-              <Row style={{ background: '#00bfff', display: 'block', padding: "10px" }}>
+              <Row style={{  display: 'block', padding: "10px" }}>
                 <Card className="card-stats mb-2" style={{ marginTop: '100px' }}>
                   <CardBody>
                     <Row>
@@ -248,7 +254,8 @@ class Userdata extends React.Component {
                   </CardBody>
                 </Card>
               </Row>
-              <Row style={{ background: '#00bfff' }}>
+              {/* old background #00bfff  */}
+              <Row style={{  }}>
 
                 <Col className="" style={{ marginTop: '10px' }}>
 
@@ -284,7 +291,34 @@ class Userdata extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
-
+                  <Col>
+                  <Card className="card-stats mb-2" style={{ margin: '0px -13px 0px -15px' }}>
+                      <CardBody>
+                        <Row>
+                          <div className="col">
+                            {/* <CardTitle
+                              tag="h5"
+                              className="text-uppercase text-blod mb-0"
+                            >
+                              Send node repaired notification
+                            </CardTitle> */}
+                            <span className="h4 font-weight-bold mb-0">
+                            Send node repaired notification
+                            </span>
+                          </div>
+                          <Col className="col-auto">
+                            <button className="bg-info"
+                                onClick={(e)=>{
+                                  this.sendNotification(e);
+                                }}
+                                style={{border:'none',padding:'5px',borderRadius:'10px'}}>
+                                Send
+                              </button>
+                          </Col>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
                   <Row>
                     <Col >
                       <Card className="card-stats mb-2">
@@ -480,7 +514,7 @@ class Userdata extends React.Component {
                 </Col>
 
               </Row>
-              <Row style={{ background: '#00bfff', padding: "10px" }}>
+              <Row style={{ padding: "10px" }}>
                 <Card style={{ width: "48%", marginRight: "15px" }}>
                   <CardBody>
                     {/* Chart */}
@@ -504,7 +538,7 @@ class Userdata extends React.Component {
                   </CardBody>
                 </Card>
               </Row>
-              <Row style={{ background: '#00bfff', padding: "10px" }}>
+              <Row style={{ padding: "10px" }}>
                 <Card style={{ width: "48%", marginRight: "15px" }}>
                   <CardBody>
                     {/* Chart */}
@@ -533,6 +567,7 @@ class Userdata extends React.Component {
           }
 
         </Container>
+        <ToastContainer />
       </>
     );
   }

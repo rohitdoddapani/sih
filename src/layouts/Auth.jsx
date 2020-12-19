@@ -67,6 +67,7 @@ class Auth extends React.Component {
         :  <>
         <div className="main-content">
           {/* <AuthNavbar /> */}
+          {/* bg-gradient-info */}
           <div className="header bg-gradient-info py-7 py-lg-8">
             <Container>
               <div className="header-body text-center mb-7">

@@ -36,7 +36,8 @@ class AdminNavbar extends React.Component {
   }
   render() {
     return (
-      <>
+      <> 
+      {/* skyblue old linear-gradient(45deg, #11ccef, #1174ef) */}
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main" style={{background: "linear-gradient(45deg, #11ccef, #1174ef) !important"}}>
           <Container fluid>
             <Link

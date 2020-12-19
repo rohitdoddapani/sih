@@ -28,34 +28,39 @@ export default function MapFlood() {
     const [valvestate, setValveState] = useState(null);
     const [flag, setFlag] = useState(0);
     const [flagValve, setFlagValve] = useState('a');
+    const [valveData, setValveData] = useState(null);
 
     useEffect(() => {
 
-        window.setTimeout(() => {
-            setLeak({ value: 1 });
-            console.log(leak);
-            // swal({
-            //     text: "flood detected!",
-            //     icon: "info"
-            // });
-        }, 7000);
+        // window.setTimeout(() => {
+        //     setLeak({ value: 1 });
+        //     console.log(leak);
+        //     // swal({
+        //     //     text: "flood detected!",
+        //     //     icon: "info"
+        //     // });
+        // }, 7000);
 
-        window.setTimeout(() => {
-            setCont({ value: 1 });
-            //console.log(leak);
-        }, 9000);
+        // window.setTimeout(() => {
+        //     setCont({ value: 1 });
+        //     //console.log(leak);
+        // }, 9000);
         const db = fire.firestore()
-        //window.setInterval(() => {
+        window.setInterval(() => {
             const users = [];
             db.collection("dams").get().then(data => {
                 data.forEach(doc=> {
-                    console.log(doc.data().readings[0]);
-                    users.push(doc.data().readings[0]);
+                    //console.log(doc.data().readings);
+                    users.push(doc.data().readings.slice(-1)[0]);
                 })
                 console.log(users);
                 setDamState(users);
             })
-        //},2000)
+            db.collection("dams").doc('g1').get().then(snapshot => {
+                //console.log(snapshot.data().valve);
+                setValveData(snapshot.data().valve);
+            })
+        },2000)
         const listner = e => {
             if (e.key === "Escape") {
                 setSelectedPoint(null);
@@ -67,12 +72,28 @@ export default function MapFlood() {
             window.removeEventListener("keydown", listner);
         }
     }, [])
+    //reset alaram
+    const sendResetNotification = async (e) => {
+        console.log("send user notification")
+        await axios.post(hosturl+"/api/v1/flood-data/reset-alarm", valveData)
+            .then(async (res)  => {
+            
+            toast("Alaram Reseted");
+            
+          }) // re-direct to client on successful creation
+          .catch(err =>{
+            toast(err.message);
+            console.log(err.message);
+          }
+          );
+     }
     //flood control
+    //open-0 close-1
     const floodChange = async (e) => {
         e.preventDefault();
         let val;
         const title = e.target.title;
-        console.log(flag,valvestate)
+        //console.log(flag,valvestate)
         //let temValve = flagValve
         if(flag == 0 || title!=flagValve){
             setValveState(e.target.value)
@@ -82,7 +103,7 @@ export default function MapFlood() {
         }else{
             val = valvestate
         }
-        console.log(flag,valvestate)
+        //console.log(flag,valvestate)
         //let val = e.target.value;
         let res_val;
         if(val==0){
@@ -90,37 +111,50 @@ export default function MapFlood() {
         }else{
             res_val = 0
         }
-        console.log(val,res_val);
+        //console.log(val,res_val);
         const valveData = {
-            valveId: 'gc',
+            valveId: 'gr',
             "data": `${res_val}`    
         }
         //to remove
-        // const db = fire.firestore()
-        // const valve_Change = db.collection('nodes').doc(`${title}`);
+        console.log(valveData);
+        const db = fire.firestore()
+        // let reads = []
+        //     await db.collection("dams").doc('d1').get().then(data => {
+                
+        //             console.log(data.data().readings);
+        //             reads.push(data.data().readings);
+        //     })
+        // console.log(reads)
+        // reads[0][0].fsw = res_val
+        
+        // const valve_Change = db.collection('dams').doc('g1');
         // await valve_Change.update({
-        //     valve: res_val
+        //     valve:res_val
         // }).then( () => {
         //     setValveState(res_val)
         //     if(val==1){
-        //         toast("valve stopped");
+        //         toast("gate opened");
+        //         console.log(valveData);
         //     }else{
-        //         toast("valve opened");
-        //     }
+        //         toast("gate closed");
+        //         console.log(valveData);
+        //     } //background: linear-gradient(#f12711, #f5af19);
         // })
-        // .catch(err => toast("Error Occured"))
+        //  .catch(err => toast("Error Occured"))
         await axios.post(hosturl+"/api/v1/valve-data/valve-status", valveData)
             .then(async (res)  => {
-            console.log(res);
-            const db = fire.firestore()
-            const valve_Change = db.collection('dams').doc('d1');
+            //console.log(res);
+            //const db = fire.firestore()
+            const valve_Change = db.collection('dams').doc('g1');
             await valve_Change.update({
                 valve: res_val
             }).then( () => {
+                setValveState(res_val)
                 if(val==1){
-                    toast("gate closed");
-                }else{
                     toast("gate opened");
+                }else{
+                    toast("gate closed");
                 }
                 }).catch(err => toast("Error Occured"))
             
@@ -154,7 +188,7 @@ export default function MapFlood() {
                         latitude={point.geometry.coordinates[1]}
                         longitude={point.geometry.coordinates[0]}
                         className={`
-                            ${leak.value && point.properties.title == "Ramganga Dam" ? "mark" : ""}
+                            ${leak.value && point.properties.title == "Prototype Dam" ? "mark" : ""}
                             ${cont.value && point.properties.title == "Dharma Valley" ? "cont" : ""}
                         `}
                     >
@@ -242,7 +276,7 @@ export default function MapFlood() {
                                             <div className="meta-info">
                                                 <h4 className="panel-title"
                                                     onClick={function () {
-                                                        console.log(setState.open);
+                                                        //console.log(setState.open);
                                                         setSelectedState({ open: !setState.open });
                                                     }} >
                                                     Catchment Area
@@ -251,9 +285,10 @@ export default function MapFlood() {
                                             <div className={setState.open ? "panel-collapse" : "panel-collapse panel-close"}
                                             >
                                                 <ul className="list-group" >
-                                                    <li className="list-group-item meta-info-row">Humidity <b>{damState[0].humidity}</b></li>
-                                                    <li className="list-group-item meta-info-row">Temparature<b>{damState[0].temp}</b></li>
-                                                    <li className="list-group-item meta-info-row">Water Level<b>{damState[0].us}</b></li>
+                                                    <li className="list-group-item meta-info-row" style={{padding: "8px"}}>Humidity <b>{damState[0].humidity}</b></li>
+                                                    <li className="list-group-item meta-info-row" style={{padding: "8px"}}>Temparature<b>{damState[0].temp}</b></li>
+                                                    <li className="list-group-item meta-info-row" style={{padding: "8px"}}>Water Level<b>{damState[0].us}</b></li>
+                                                    <li className="list-group-item meta-info-row" style={{padding: "8px"}}>Soil Moisture<b>{damState[0].sm}</b></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -262,10 +297,13 @@ export default function MapFlood() {
                                         <div className="table-info-row">
                                             <div className="meta-info">
                                                 <div className="meta-info-row">
-                                                    Water Level:
-                                               <b>{damState[1].us}</b>
+                                                    Water outflow:
+                                               <b>{damState[1].us1}</b>
                                                 </div>
-                                                
+                                                <div className="meta-info-row">
+                                                    Water inflow:
+                                               <b>{damState[1].us2}</b>
+                                                </div>
                                                 <div className="meta-info-row">
                                                     Gate
                                                     <div className="toggle-switch">
@@ -273,7 +311,8 @@ export default function MapFlood() {
                                                             type="checkbox"
                                                             className="toggle-switch-checkbox"
                                                             name="toggleSwitch"
-                                                            defaultChecked="true"
+                                                            value={valveData}
+                                                            defaultChecked={valveData}
                                                             onChange={(e) => floodChange(e)}
                                                             id="toggleSwitch"
                                                         />
@@ -283,10 +322,22 @@ export default function MapFlood() {
                                                         </label>
                                                     </div>
                                                 </div>
+                                                <div className="meta-info-row" style={{paddingTop: "5px"}}>
+                                                    Reset alaram
+                                                    <div className="">
+                                                        <button className="bg-info"
+                                                            onClick={(e)=>{
+                                                                sendResetNotification(e);
+                                                            }}
+                                                            style={{border:'none',padding:'5px',borderRadius:'10px'}}>
+                                                            Reset
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {0>0 ?
+                                    {damState[1].fsw=="1" ?
                                     <div className="table-info-wrapper">
                                         <div className="table-info-row">
                                             <div className="meta-info">
@@ -316,7 +367,7 @@ export default function MapFlood() {
                                             <div className="meta-info">
                                                 <h4 className="panel-title"
                                                     onClick={function () {
-                                                        console.log(setState.open);
+                                                        //console.log(setState.open);
                                                         setSelectedState({ open: !setState.open });
                                                     }} >
                                                     Water Quality Parameters

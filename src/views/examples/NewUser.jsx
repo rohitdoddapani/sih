@@ -505,7 +505,7 @@ class NewUser extends React.Component {
 
     return (
       <>
-        <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+        <div className="header pb-8 pt-5 pt-md-8" style={{background: 'linear-gradient(87deg, #11ccef, #1174ef)'}}>
           
         {/* Page content */}
         <Container className="mt-30" fluid>
@@ -513,7 +513,7 @@ class NewUser extends React.Component {
                 tabKey={'1'}
                 style={{ minWidth:  1000, height:  900, background:  'white',borderRadius: "20px" }}
                 activeTabStyle={{ background:  'blue',height: "120%" , color:  'white', borderRadius: "10px 0 0 10px" }}
-                unActiveTabStyle={{ background:  'lightblue',height: "120%" , color:  'black', borderRadius: "0 10px 10px 0" }}
+                unActiveTabStyle={{ background:  'skyblue',height: "120%" , color:  'white', borderRadius: "0 10px 10px 0" }}
                 
                 leftTabTitle={'New User'}
                 rightTabTitle={'New Node'}
