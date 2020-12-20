@@ -16,7 +16,7 @@ class FloodMaps extends React.Component {
       <>
         {/* <Header /> */}
         {/* Page content */}
-        <Container className="" fluid>
+        <Container className="" fluid style={{background: "linear-gradient(87deg, #11ccef, #1174ef)",paddingBottom:"20px"}}>
           <Row style={{paddingTop: "100px"}}>
             
             

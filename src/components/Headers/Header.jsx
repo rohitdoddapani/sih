@@ -40,7 +40,7 @@ class Header extends React.Component {
     setInterval(() => {
     db.collection("globals").doc('values').get().then( snapshot => {
       const users = [];
-      console.log(snapshot.data());
+      // console.log(snapshot.data());
       // snapshot.forEach(doc => {
       //     console.log(doc.data());
       //     users.push(doc.data())

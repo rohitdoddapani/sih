@@ -53,13 +53,13 @@ export default function Mapbox() {
         const db = fire.firestore()
         window.setInterval(() => {
             db.collection("globals").doc('values').get().then(data => {
-                console.log(data.data().current_leaks);
+                //console.log(data.data().current_leaks);
                 if(data.data().current_leaks >0){
                     setLeak(1);
                 }else{
                     setLeak(0);
                 }
-                console.log(leak);
+                //console.log(leak);
             })
         },2000)
         
@@ -92,13 +92,14 @@ export default function Mapbox() {
         e.preventDefault();
         let val;
         const title = e.target.title;
-        console.log(flag,valvestate)
+        console.log(flag,valvestate,e.target.value)
         //let temValve = flagValve
+        console.log(flag,title,flagValve);
         if(flag == 0 || title!=flagValve){
-            setValveState(e.target.value)
+            setValveState(parseInt(e.target.value))
             setFlag(1)
             setFlagValve(title)
-            val = e.target.value
+            val = parseInt(e.target.value)
         }else{
             val = valvestate
         }
@@ -113,9 +114,10 @@ export default function Mapbox() {
         console.log(val,res_val);
         const valveData = {
             valveId: `${title}`,
-            "data": `${res_val}`    
+            "data": `${val}`    
         }
         console.log(valveData)
+        //setValveState(res_val)
         //to remove
         // const db = fire.firestore()
         // const valve_Change = db.collection('nodes').doc(`${title}`);
@@ -138,6 +140,7 @@ export default function Mapbox() {
             await valve_Change.update({
                 valve: res_val
             }).then( () => {
+                setValveState(res_val)
                 if(val==1){
                     toast("valve stopped");
                 }else{
@@ -200,7 +203,6 @@ export default function Mapbox() {
                     console.log(point.coordinates)
                 )) : ""} */}
                 {state? state.map((point) => (
-                    console.log(point),
                     <Marker key={point.title}
                         latitude={parseFloat(point.coordinates[1])}
                         longitude={parseFloat(point.coordinates[0])}
@@ -322,10 +324,10 @@ export default function Mapbox() {
                                                 Turbidity: 
                                                 <b>{selectPoint.readings.slice(-1)[0].turb}</b>
                                             </div>
-                                            {/* <div className="meta-info-row">
+                                            <div className="meta-info-row">
                                                 TDS: 
                                                 <b>{selectPoint.readings.slice(-1)[0].TDS}</b>
-                                            </div> */}
+                                            </div>
                                             <div className="meta-info-row">
                                                 FlowRate: 
                                                 <b>{selectPoint.readings.slice(-1)[0].FR}</b>
