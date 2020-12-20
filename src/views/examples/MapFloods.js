@@ -162,7 +162,7 @@ export default function MapFlood() {
             "data": `${val}`
         }
         //to remove
-        setValveState(res_val)
+        //setValveState(res_val)
         console.log(valveData);
         const db = fire.firestore()
         // let reads = []
