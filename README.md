@@ -5,3 +5,4 @@
 
 This repository is an Admin dashboard created using reactjs and firebase through this dashboard the muncipal authorities can control the valves and can see all the nodes in a map view. Also, each users data is also available for them.
 
+# Refer final.pptx file for project details
